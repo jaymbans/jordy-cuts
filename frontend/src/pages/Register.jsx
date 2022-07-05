@@ -4,6 +4,7 @@ import { FaUser } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { register, reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -26,7 +27,6 @@ function Register() {
   useEffect(() => {
     if (isError) {
       toast.error(message);
-      console.log(message)
     }
 
     // redirection
@@ -46,7 +46,6 @@ function Register() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(name, email, password)
     // password verification
     if (password !== password2) {
       toast.error('Please make sure your passwords match!')
@@ -58,6 +57,10 @@ function Register() {
       }
       dispatch(register(userData))
     }
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return (
@@ -79,7 +82,7 @@ function Register() {
               name="password2" id="password2" className="form-control" placeholder='Re-enter Password' onChange={onChange} />
           </div>
           <div className="form-group">
-            <button className="btn btn-block">
+            <button className="btn btn-block bk-red">
               Register
             </button>
           </div>
@@ -88,5 +91,6 @@ function Register() {
     </>
   )
 }
+
 
 export default Register

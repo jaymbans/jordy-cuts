@@ -1,9 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../features/auth/authSlice';
+import { login, reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -11,11 +13,26 @@ function Login() {
     password: ''
   })
 
+  const navigate = useNavigate();
+
   const { email, password } = formData;
 
   // dispatch and grab global state
   const dispatch = useDispatch();
-  const { user, isLoading, isSuccess, isMessage } = useSelector(state => state.auth)
+  const { user, isLoading, isError, isSuccess, message } = useSelector(state => state.auth)
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(message);
+    }
+
+    // redirection
+    if (isSuccess && user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [isError, isSuccess, user, message, navigate, dispatch])
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -34,6 +51,10 @@ function Login() {
     dispatch(login(userData))
   }
 
+  if (isLoading) {
+    return <Spinner />
+  }
+
   return (
     <>
       <section className="heading">
@@ -49,7 +70,7 @@ function Login() {
               name="password" id="password" className="form-control" placeholder='Enter Password' onChange={onChange} />
           </div>
           <div className="form-group">
-            <button className="btn btn-block">
+            <button className="btn btn-block bk-blue">
               Login
             </button>
           </div>

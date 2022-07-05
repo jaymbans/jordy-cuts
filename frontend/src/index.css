@@ -82,6 +82,26 @@ h3 {
   padding: 0 20px;
 }
 
+.header .logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 7rem;
+  height: 4rem;
+}
+
+.header .logo::before {
+  content: "";
+  background-image: url('./assets/barber-pole.gif');
+  background-size: cover;
+  background-position: center;
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .heading p {
   color: #828282;
 }
@@ -228,6 +248,8 @@ h3 {
 
 .status {
   background-color: #333;
+  display: flex;
+  justify-content: center;
   color: #fff;
   width: 100px;
   padding: 0 20px;
@@ -237,19 +259,20 @@ h3 {
   text-align: center;
 }
 
-.status-new {
-  background-color: green;
-  color: #fff;
-  border-radius: 10px;
-}
-
-.status-open {
+/* statuses: ['requested', 'under review', 'accepted', 'rejected'] */
+.status-requested {
   background-color: steelblue;
   color: #fff;
   border-radius: 10px;
 }
 
-.status-closed {
+.status-accepted {
+  background-color: green;
+  color: #fff;
+  border-radius: 10px;
+}
+
+.status-rejected {
   background-color: darkred;
   color: #fff;
   border-radius: 10px;
@@ -404,4 +427,24 @@ footer {
   .heading p {
     font-size: 1.5rem;
   }
+}
+
+/* color classes */
+
+.blue {
+  color: blue;
+  font-weight: bold;
+}
+
+.red {
+  color: red;
+  font-weight: bold;
+}
+
+.bk-blue {
+  background: blue;
+}
+
+.bk-red {
+  background: red;
 }
